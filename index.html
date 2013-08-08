@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MWDeckBuiler</title>
+    <script src="javascript/jquery-1.10.2.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="DataTables/js/jquery.dataTables.js"></script>
+    <script src="javascript/mw.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="DataTables/css/jquery.dataTables.css">
+    </link>
+  </head>
+  <body style="zoom: 1;">
+    <div class="container">
+      <div id="header_div" class="row">
+        <div class="span3">
+          <div class="row">
+            <div class="well">
+              <div id="packs_container">
+                <label for="decks">
+                  Core:
+                  <select class="deck_count" data-pack="core">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                  &nbsp;&nbsp;Tome:
+                  <select class="deck_count" data-pack="tome">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="well">
+              <div id="mage_select">
+                <label class="radio">
+                <input type="radio" class="radio" name="mage" value="Wizard(Air)" data-air="1" data-elemental="1" data-card="Wizard_outline.jpg" data-ability="Wizard_Ability_outline.jpg">Wizard(Air)</label>
+                <label class="radio">
+                <input type="radio" class="radio" name="mage" value="Wizard(Water)" data-card="Wizard_outline.jpg"  data-water="1" data-elemental="1" data-ability="Wizard_Ability_outline.jpg">Wizard(Water)</label>
+                <label class="radio">
+                <input type="radio" class="radio" name="mage" value="Wizard(Earth)" data-earth="1" data-elemental="1" data-card="Wizard_outline.jpg" data-ability="Wizard_Ability_outline.jpg">Wizard(Earth)</label>
+                <label class="radio">
+                <input type="radio" class="radio" name="mage" value="Wizard(Fire)" data-fire="1" data-elemental="1" data-card="Wizard_outline.jpg" data-ability="Wizard_Ability_outline.jpg">Wizard(Fire)</label>
+                <label class="radio">
+                <input type="radio" class="radio" name="mage" value="Beastmaster" data-fire="3" data-nature-"1" data-card="Beastmaster_outline.jpg" data-ability="Beastmaster_Ability_outline.jpg">Beastmaster</label>
+                <label class="radio">
+                <input type="radio" class="radio" name="mage" value="Warlock" data-air="2" data-earth="2" data-water="2" data-fire="1" data-holy="3" data-dark="1" data-elemental="2" data-nature-"2" data-card="Warlock_outline.jpg" data-ability="Warlock_Ability_outline.jpg">Warlock</label>
+                <label class="radio">
+                <input type="radio" class="radio" name="mage" value="Priestess" data-holy="1" data-dark="3" data-card="Priestess_outline.jpg" data-ability="Priestess_Ability_outline.jpg">Priestess</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="well">
+              <div id="dload_button_container" class="btn-group">
+                <label for="download">
+                <button data-dload="xml" class="btn btn-primary btn-small">XML</button>
+                <button data-dload="csv" class="btn btn-primary btn-small">CSV</button>
+                <button data-dload="pdf" class="btn btn-primary btn-small">PDF</button>
+                <button id="upload_btn" class="btn btn-primary btn-small">Upload</button>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <div id="mage_profile_div" class="tabbable tabs-below">
+            <div class="tab-content">
+              <div id="mage_holder">
+              </div>
+            </div>
+            <ul class="nav nav-tabs">
+              <li class="nav-header"><a data-tab="card" href="#">Picture</a></li>
+              <li class="nav-header"><a data-tab="ability" href="#">Abilities</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span4">
+          <div id="card_holder">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="tables_container" class="hide">
+          <div class="span5">
+            <div id="total_cost_container">
+              <strong>
+              <label for="compositions">
+              Att:&nbsp;<span data-type="attack" class="Attack">0</span>
+              Cre:&nbsp;<span data-type="creature" class="Creature">0</span>
+              Con:&nbsp;<span data-type="conjuration" class="Conjuration">0</span>
+              Enc:&nbsp;<span data-type="enchantment" class="Enchantment">0</span>
+              Equ:&nbsp;<span data-type="equipment" class="Equipment">0</span>
+              Inc:&nbsp;<span data-type="incantation" class="Incantation">0</span>
+              Cost:&nbsp;<span id="total_deck_cost">0</span>
+              </label>
+              </strong>
+            </div>
+            <br>
+            <table id="deck_table" class="dataTable">
+              <thead>
+                <tr>
+                  <th>Card</th>
+                  <th>#</th>
+                  <th>Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="span5">
+            <table id="card_list_table">
+              <thead>
+                <tr>
+                  <th>Card</th>
+                  <th>Count</th>
+                  <th>Max</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-code='mw1a01' data-holy="2" data-core='2'  data-type='attack' data-cast='7'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Blinding Flash</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a02' data-air="3" data-core='2'  data-type='attack' data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Chain Lightning</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a03' data-air="2" data-core='2'  data-type='attack' data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Electrify</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a04' data-fire="2" data-core='3' data-tome='1' data-type='attack' data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Fireball</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a05' data-fire="3" data-core='2'  data-type='attack' data-cast='11'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Firestorm</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a06' data-fire="1" data-core='2'  data-type='attack' data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Flameblast</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a07' data-air="2" data-core='3' data-tome='1' data-type='attack' data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Lightning Bolt</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a08' data-water="1" data-core='2'  data-type='attack' data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Geyser</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a09' data-air="1" data-core='3' data-tome='1' data-type='attack' data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Jet Stream</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a11' data-holy="1" data-core='3' data-tome='1' data-type='attack' data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Pillar of Light</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a12' data-fire="2" data-core='2'  data-type='attack' data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Ring of Fire</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1a13' data-air="3" data-core='2' data-tome='1' data-type='attack' data-cast='10'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Thunderbolt</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e01' data-nature="1" data-core='3' data-tome='1' data-type='enchantment' data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Bear Strength</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e02' data-mind="1" data-core='5' data-tome='2' data-type='enchantment' data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Block</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e03' data-nature="1" data-core='2' data-tome='1' data-type='enchantment' data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Bull Endurance</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e04' data-dark="1" data-core='2'  data-type='enchantment' data-cast='1'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Chains of Agony</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e05' data-nature="1" data-core='2'  data-type='enchantment' data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Cheetah Speed</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e06' data-air="2" data-core='1' data-tome='1' data-type='enchantment' data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Circle of Lightning</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e07' data-nature="2" data-core='2'  data-type='enchantment' data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Cobra Reflexes</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e08' data-dark="2" data-core='1'  data-type='enchantment' data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Death Link</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e09' data-dark="1" data-core='3' data-tome='1' data-type='enchantment' data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Agony</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e10' data-mind="1" data-core='4' data-tome='1' data-novice="true" data-type='enchantment' data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Decoy</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e11' data-holy="3" data-core='1' data-type='enchantment' data-cast='10'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Divine Intervention</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1e12' data-holy="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Divine Protection</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e13' data-nature="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Eagle Wings</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e14' data-dark="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Enfeeble</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e15' data-arcane="2" data-core='3' data-tome='1' data-type='enchantment'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Essence Drain</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e16' data-mind="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Force Hold</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e17' data-mind="1" data-core='1' data-tome='1' data-type='enchantment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Force Orb</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e18' data-mind="1" data-core='1' data-tome='1' data-type='enchantment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Force Sword</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e19' data-dark="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Ghoul Rot</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e20' data-arcane="1" data-core='3' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Harmonize</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e21' data-nature="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='1'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Hawkeye</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e22' data-dark="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Hellfire Trap</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e23' data-arcane="1" data-core='2' data-tome='2' data-type='enchantment'data-cast='1'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Jinx</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e24' data-dark="1" data-core='1'  data-type='enchantment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Magebane</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e25' data-dark="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Maim Wings</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e27' data-dark="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Marked for Death</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e28' data-nature="1" data-core='2'  data-type='enchantment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mongoose Agility</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e29' data-arcane="1" data-core='5' data-tome='2' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Nullify</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e30' data-holy="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Pacify</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e31' data-dark="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Poisoned Blood</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e32' data-nature="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Regrowth</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e33' data-war="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Retaliate</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e34' data-mind="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Reverse Attack</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e35' data-arcane="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Reverse Magic</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e36' data-nature="1" data-core='3' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Rhino Hide</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e37' data-holy="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Sacred Ground</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e38' data-arcane="1" data-core='2' data-tome='1' data-type='enchantment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Teleport Trap</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e39' data-arcane="2" data-earth='1' data-core='2' data-tome='1' data-type='enchantment'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Turn to Stone</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1e40' data-dark="2" data-core='2' data-tome='1' data-type='enchantment'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Vampirism</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i01' data-arcane="3" data-core='2' data-tome='1' data-type='incantation'data-cast='14'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Banish</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i02' data-war="1" data-core='2' data-tome='1' data-type='incantation'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Battle Fury</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i03' data-nature="1" data-core='3' data-tome='1' data-type='incantation' data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Call of the Wild</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i04' data-war="1" data-core='2' data-tome='1' data-type='incantation'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Charge</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i06' data-arcane="1" data-core='5' data-tome='1' data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Dispel</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i07' data-water="1" data-core='5' data-tome='1' data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Dissolve</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i08' data-dark="3" data-core='2' data-tome='1' data-type='incantation'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Drain Life</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i09' data-arcane="3" data-core='2' data-tome='1' data-type='incantation'data-cast='16'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Drain Power</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i10' data-war="1" data-core='2' data-tome='1' data-type='incantation'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Evade</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i11' data-fire="2" data-core='2' data-tome='1' data-type='incantation'data-cast='0'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Explode</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i12' data-mind="1" data-core='3' data-tome='2' data-type='incantation'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Force Push</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i13' data-holy="2" data-core='2' data-tome='1' data-type='incantation'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Group Heal</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i14' data-holy="2" data-core='3' data-tome='1' data-type='incantation'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Heal</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i15' data-mind="1" data-core='2' data-tome='1' data-type='incantation'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Knockdown</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i16' data-holy="3" data-core='1' data-type='incantation'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Lay Hands</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1i17' data-holy="1" data-core='5' data-tome='1' data-type='incantation'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Minor Heal</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i18' data-war="1" data-core='2' data-tome='1' data-novice="true" data-type='incantation'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Perfect Strike</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i19' data-war="1" data-core='2' data-tome='1' data-novice="true" data-type='incantation'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Piercing Strike</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i20' data-holy="1" data-core='1' data-tome='1' data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Purify</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i21' data-arcane="3" data-core='2' data-tome='1' data-type='incantation'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Purge Magic</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i22' data-holy="4" data-core='1'  data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Resurrection</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i23' data-nature="1" data-core='2' data-tome='1' data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Rouse the Beast</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i24' data-arcane="1" data-core='3' data-tome='1' data-type='incantation'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Seeking Dispel</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i25' data-arcane="1" data-core='2' data-tome='2' data-novice="true" data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Shift Enchantment</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i26' data-mind="2" data-core='2' data-tome='1' data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Sleep</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i27' data-arcane="3" data-core='2' data-tome='1' data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Steal Enchantment</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i28' data-arcane="2" data-core='3' data-tome='2' data-type='incantation'data-cast='nil'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Teleport</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1i29' data-dark="1" data-core='2' data-tome='1' data-type='incantation'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Vampiric Strike</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c01' data-core='1'  data-dark="4" data-fire="2" data-type='creature'data-cast='24'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Adramelech, Lord of Fire</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c02' data-holy="1" data-core='4' data-tome='1' data-type='creature'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Asyran Cleric</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c03' data-dark="3" data-core='2' data-tome='1' data-type='creature'data-cast='13'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Dark Pact Slayer</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c04' data-nature="1" data-core='4' data-tome='1' data-type='creature'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Bitterwood Fox</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c05' data-arcane="2" data-core='2' data-tome='1' data-type='creature'data-cast='7'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Blue Gremlin</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c06' data-holy="4" data-core='1'  data-type='creature'data-cast='15'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Brogan Bloodstone</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c07' data-nature ='4' data-tome='1'  data-type='creature'data-cast='15'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Cervere, The Forest Shadow</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c08' data-dark="1" data-core='3' data-tome='1' data-type='creature'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Darkfenne Bat</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c09' data-arcane="4" data-core='2'  data-type='creature'data-cast='16'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Darkfenne Hydra</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c12' data-nature="2" data-core='2'  data-type='creature'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Emerald Tegu</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c13' data-nature='3' data-core='1'  data-type='creature'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Fellella, Pixie Familiar</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c14' data-nature="1" data-core='2' data-tome='1' data-type='creature'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Feral Bobcat</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c15' data-dark="1" data-core='3' data-tome='1' data-type='creature'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Firebrand Imp</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c16' data-dark="3" data-core='2' data-tome='1' data-type='creature'data-cast='13'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Flaming Hellion</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c17' data-dark = '4' data-tome='1'  data-type='creature'data-cast='15'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Goran, Werewolf Pet</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c18' data-arcane="4" data-core='1'  data-type='creature'data-cast='16'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Gorgon Archer</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c19' data-holy="3" data-core='2' data-tome='1' data-type='creature'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Gray Angel</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c20' data-holy="3" data-core='2'  data-type='creature'data-cast='13'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Highland Unicorn</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c21' data-arcane="3" data-core='1'  data-type='creature'data-cast='11'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Huginn, Raven Familiar</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c22' data-holy="3" data-core='2'  data-type='creature'data-cast='13'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Knight of Westlock</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c23' data-dark="4" data-core='1'  data-type='creature'data-cast='16'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Malacoda</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c24' data-arcane="2" data-core='3' data-tome='1' data-type='creature'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mana Leech</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c25' data-nature="4" data-core='1' data-tome='1' data-type='creature'data-cast='16'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mountain Gorilla</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c26' data-dark="4" data-core='1' data-tome='1' data-type='creature'data-cast='16'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Necropian Vampiress</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c27' data-arcane="2" data-core='2' data-tome='1' data-type='creature'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Moonglow Faerie</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c28' data-holy="3" data-core='2' data-tome='1' data-type='creature'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Royal Archer</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c29' data-nature="4" data-core='1'  data-type='creature'data-cast='16'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Redclaw, Alpha Male</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c31' data-holy='5' data-tome='1'  data-type='creature'data-cast='21'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Samandriel</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c32' data-dark="2" data-core='2' data-tome='1' data-type='creature'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Skeletal Sentry</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c33' data-nature="2" data-core='1'  data-type='creature'data-cast='7'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Sosruko, Ferret Companion</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c34' data-nature="4" data-core='1'  data-type='creature'data-cast='17'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Steelclaw Grizzly</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c35' data-arcane="3" data-core='1'  data-type='creature'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Stonegaze Basilisk</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c36' data-nature='3' data-core='1'  data-type='creature'data-cast='13'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Tarok, the Skyhunter</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c37' data-nature="1" data-core='2' data-tome='1' data-type='creature'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Thunderift Falcon</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c38' data-nature="2" data-core='3' data-tome='1' data-type='creature'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Timber Wolf</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c39' data-holy="5" data-core="1"  data-type='creature'data-cast='21'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Valshalla, Lightning Angel</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1c40' data-air="4" data-core='1' data-tome='1' data-type='creature'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Whirling Spirit</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q01' data-arcane="1" data-core='1'  data-type='equipment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Arcane Ring</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q02' data-nature="1" data-core='1'  data-type='equipment'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Bearskin</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q03' data-holy="1" data-core='1'  data-type='equipment'data-cast='1'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Crown of Protection</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q04' data-war="1" data-core='1' data-tome='1' data-type='equipment'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Deflection Bracers</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q05' data-dark="2" data-core='1'  data-type='equipment'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Demonhide Armor</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q06' data-fire="1" data-core='1' data-tome='1' data-type='equipment'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Dragonscale Hauberk</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q27' data-holy="1" data-core='1'  data-type='equipment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Dawnbreaker Ring</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q07' data-arcane="1" data-core='2'  data-type='equipment'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Elemental Cloak</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q08' data-earth="2" data-water="2" data-air="2" data-fire="2" data-core='2' data-tome='1' data-or-cost="true" data-type='equipment'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Elemental Wand</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q09' data-arcane="1" data-nature="1" data-core='1'  data-or-cost="true"data-type='equipment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Enchanter's Ring</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q10' data-fire="1" data-core='1'  data-type='equipment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Fireshaper Ring</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q11' data-war="1" data-core='1' data-tome='1' data-type='equipment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Gauntlets of Strength</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q12' data-dark="2" data-core='1'  data-type='equipment'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Helm of Fear</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q13' data-war="2" data-core='1' data-tome='1' data-type='equipment'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Ivarium Longbow</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q14' data-dark="1" data-fire="1" data-core='1'  data-type='equipment'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Lash of Hellfire</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q15' data-war="1" data-core='1' data-tome='1' data-novice="true" data-type='equipment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Leather Boots</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q16' data-war="1" data-core='1' data-tome='1' data-novice="true" data-type='equipment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Leather Gloves</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q17' data-air="1" data-core='1'  data-type='equipment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Lightning Ring</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q18' data-arcane="1" data-core='1' data-tome='1' data-type='equipment'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mage Staff</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q19' data-arcane="2" data-core='3' data-tome='1' data-type='equipment'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mage Wand</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q21' data-dark="1" data-core='1'  data-type='equipment'data-cast='3'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Moloch's Torment</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q22' data-arcane="1" data-core='2'  data-type='equipment'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Moonglow Amulet</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q23' data-nature="1" data-core='1' data-tome='1' data-type='equipment'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Regrowth Belt</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q24' data-holy="1" data-core='1'  data-type='equipment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Ring of Asyra</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q25' data-nature="1" data-core='1'  data-type='equipment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Ring of Beasts</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q28' data-dark="1" data-core='1'  data-type='equipment'data-cast='2'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Ring of Curses</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q29' data-holy="2" data-core='1'  data-type='equipment'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Staff of Asyra</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q30' data-nature="2" data-core='1'  data-type='equipment'data-cast='7'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Staff of Beasts</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q31' data-arcane="2" data-core='1'  data-type='equipment'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Staff of the Arcanum</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q32' data-arcane="2" data-core='1'  data-type='equipment'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Suppression Cloak</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1q33' data-air="1" data-core='1'  data-type='equipment'data-cast='6'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Wind Wyvern Hide</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j02' data-nature="2" data-core='1' data-tome='1' data-type='conjuration'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Animal Kinship</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j03' data-nature="2" data-core='1' data-tome='1' data-type='conjuration'data-cast='7'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Tooth & Nail</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j04' data-war="1" data-fire="1" data-core='2' data-tome='1' data-type='conjuration'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Battle Forge</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j06' data-dark="6" data-core='1' data-type='conjuration'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Gate to Hell</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j07' data-arcane="4" data-core='1' data-type='conjuration'data-cast='14'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Gate to Voltari</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j08' data-holy="1" data-core='1' data-tome='1' data-type='conjuration'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Hand of Bim-Shalla</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j09' data-holy="2" data-core='1' data-tome='1' data-type='conjuration'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Temple of the Dawnbreaker</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j10' data-nature="4" data-core='1' data-type='conjuration'data-cast='15'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Lair</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j11' data-dark="2" data-core='1' data-type='conjuration'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Idol of Pestilence</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j12' data-arcane="1" data-core='5' data-tome='1' data-type='conjuration'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mana Crystal</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j13' data-nature="1" data-core='5' data-tome='1' data-type='conjuration'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mana Flower</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j14' data-arcane="3" data-core='1' data-type='conjuration'data-cast='12'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mana Siphon</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j15' data-nature='2' data-core='1' data-tome='8' data-type='conjuration'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mohktari, Great Tree of Life</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j16' data-arcane="2" data-core='1' data-type='conjuration'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Mordok's Obelisk</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j17' data-dark="4" data-core='1' data-type='conjuration'data-cast='14'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Pentagram</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j18' data-air="2" data-core='2'  data-type='conjuration'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Poison Gas Cloud</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j19' data-dark="2" data-core='1' data-type='conjuration'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Deathlock</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j20' data-dark="1" data-core='1'  data-type='conjuration'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Sacrificial Altar</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j21' data-mind="2" data-core='1' data-type='conjuration'data-cast='8'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Suppression Orb</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j22' data-nature="1" data-core='3' data-tome='1' data-type='conjuration'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Tanglevine</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1j23' data-holy="3" data-core='1' data-type='conjuration'data-cast='10'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Temple of Asyra</a></td>
+                  <td></td>
+                  <td>1</td>
+                </tr>
+                <tr data-code='mw1j24' data-holy="2" data-core='1'  data-type='conjuration'data-cast='9'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Temple of Light</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1w01' data-air="1" data-core='2' data-tome='1' data-type='conjuration'data-cast='4'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Fog Bank</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1w02' data-earth="2" data-core='2' data-tome='1' data-type='conjuration'data-cast='7'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Wall of Stone</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1w03' data-fire="2" data-core='2' data-tome='1' data-type='conjuration'data-cast='7'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Wall of Fire</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+                <tr data-code='mw1w04' data-nature="1" data-core='2' data-tome='1' data-type='conjuration'data-cast='5'>
+                  <td class='name'><button class='btn btn-small'><i class='icon-arrow-left'></i></button>&nbsp;<a class='card_href' href='#'>Wall of Thorns</a></td>
+                  <td></td>
+                  <td>4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="filters_container" class="span2">
+            <div id="for_type">
+              <ul class="unstyled">
+                <li>
+                  <input type="checkbox" name="attack" value="attack">Attacks
+                </li>
+                <li>
+                  <input type="checkbox" name="creature" value="creature">Creatures
+                </li>
+                <li>
+                  <input type="checkbox" name="conjuration" value="conjuration">Conjurations
+                </li>
+                <li>
+                  <input type="checkbox" name="enchantment" value="enchantment">Enchantments
+                </li>
+                <li>
+                  <input type="checkbox" name="equipment" value="equipment">Equipment
+                </li>
+                <li>
+                  <input type="checkbox" name="incantation" value="incantation">Incantations
+                </li>
+              </ul>
+            </div>
+            <div id="for_school">
+              <ul class="unstyled">
+                <li>
+                  <input type="checkbox" name="air" value="air">Air
+                </li>
+                <li>
+                  <input type="checkbox" name="arcane" value="arcane">Arcane
+                </li>
+                <li>
+                  <input type="checkbox" name="dark" value="dark">Dark
+                </li>
+                <li>
+                  <input type="checkbox" name="earth" value="earth">Earth
+                </li>
+                <li>
+                  <input type="checkbox" name="fire" value="fire">Fire
+                </li>
+                <li>
+                  <input type="checkbox" name="holy" value="holy">Holy
+                </li>
+                <li>
+                  <input type="checkbox" name="mind" value="mind">Mind
+                </li>
+                <li>
+                  <input type="checkbox" name="nature" value="nature">Nature
+                </li>
+                <li>
+                  <input type="checkbox" name="war" value="war">War
+                </li>
+                <li>
+                  <input type="checkbox" name="water" value="water">Water
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
